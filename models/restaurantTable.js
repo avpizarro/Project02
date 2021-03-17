@@ -27,11 +27,12 @@ module.exports = (sequelize, DataTypes) => {
   // Table table with Dish Table connect "many to many"
   RestaurantTable.associate = function(models) {
     RestaurantTable.belongsToMany(models.Dish, {
-      through: "TableDishes",
+      through: models.TableDish,
       as: "dishes",
       foreignKey: "tableId",
       otherKey: "dishId"
     });
   };
+
   return RestaurantTable;
 };

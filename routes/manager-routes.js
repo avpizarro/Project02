@@ -15,12 +15,12 @@ module.exports = app => {
   });
 
   //This route will render add employee page if clicked the add new employee button
-  app.get("/manager/newEmployee", (req, res) => {
+  app.get("/newEmployee", (req, res) => {
     res.render("addEmpForm");
   });
 
   //html route to render to delete employee
-  app.get("/manager/deleteEmployee", (req, res) => {
+  app.get("/deleteEmployee", (req, res) => {
     db.Employee.findAll({}).then(response => {
       res.render("deleteEmp", {
         em: response
@@ -72,7 +72,7 @@ module.exports = app => {
 
   /////////Menu/////////
   //Main page render for view dish
-  app.get("/manager/viewDish", (req, res) => {
+  app.get("/viewDish", (req, res) => {
     db.Dish.findAll({}).then(response => {
       console.log(response);
       res.render("viewDish", {
@@ -82,12 +82,12 @@ module.exports = app => {
   });
 
   //This route will render add dish page if clicked
-  app.get("/manager/newDish", (req, res) => {
+  app.get("/newDish", (req, res) => {
     res.render("addDishForm");
   });
 
   //html route to render to delete dish
-  app.get("/manager/deleteDish", (req, res) => {
+  app.get("/deleteDish", (req, res) => {
     db.Dish.findAll({}).then(response => {
       res.render("deleteDish", {
         dishes: response
@@ -128,7 +128,7 @@ module.exports = app => {
   /////////Ingredients/////////
 
   //Main page render for view Ingredients
-  app.get("/manager/viewIngredient", (req, res) => {
+  app.get("/viewIngredient", (req, res) => {
     db.Ingredient.findAll({}).then(response => {
       console.log(response);
       res.render("viewIngredient", {
@@ -138,7 +138,7 @@ module.exports = app => {
   });
 
   //This route will render add ingredient page if clicked
-  app.get("/manager/addIngredients", (req, res) => {
+  app.get("/addIngredients", (req, res) => {
     res.render("addIngredientForm");
   });
 
@@ -156,6 +156,28 @@ module.exports = app => {
     db.Ingredient.create(newIngredient).then(ing => {
       console.log(`Added ingredient ${ing.name}`);
       res.json(ing);
+    });
+  });
+
+  //html route to render to delete ingredient
+  app.get("/deleteIngredient", (req, res) => {
+    db.Ingredient.findAll({}).then(response => {
+      res.render("deleteIngredient", {
+        ing: response
+      });
+    });
+  });
+
+  //Delete Ingredient
+  app.delete("/api/ingredient/:id", (req, res) => {
+    db.Ingredient.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(ingredient => {
+      //Remove ingredient with id
+      console.log(`Remove ingredient with id ${ingredient.id}`);
+      res.end();
     });
   });
 };

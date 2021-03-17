@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   const Dish = sequelize.define("Dish", {
     id: {
@@ -19,19 +20,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [1]
       }
-    },
-    isReady: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
     }
   });
   // Table table with Dish Table connect "many to many"
   Dish.associate = function(models) {
     Dish.belongsToMany(models.RestaurantTable, {
-      through: "TableDishes",
+      through: models.TableDish,
       as: "tables",
       foreignKey: "dishId",
       otherKey: "tableId"

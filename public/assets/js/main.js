@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", event => {
   const logOutBtn = document.getElementById("logOut");
   const homeBtn = document.getElementById("home");
   const managerHomeBtn = document.getElementById("managerHome");
+  const signUpBtn = document.getElementById("signUpBtn");
+  const signUpForm = document.getElementById("signUpForm");
+  const pincode = document.querySelector(".pincodeCenter");
 
   // Logout on click
   logOutBtn.addEventListener("click", e => {
@@ -18,14 +21,26 @@ document.addEventListener("DOMContentLoaded", event => {
   });
 
   // Back home on click
-  homeBtn.addEventListener("click", e => {
-    e.preventDefault();
-    window.location.replace("/");
-  });
+  if (homeBtn) {
+    homeBtn.addEventListener("click", e => {
+      e.preventDefault();
+      window.location.replace("/");
+    });
+  }
 
   // Back to manager page on click
-  managerHomeBtn.addEventListener("click", e => {
-    e.preventDefault();
-    window.location.replace("/manager");
-  });
+  if (managerHomeBtn) {
+    managerHomeBtn.addEventListener("click", e => {
+      e.preventDefault();
+      window.location.replace("/manager");
+    });
+  }
+  if (signUpBtn) {
+    signUpBtn.addEventListener("click", e => {
+      e.preventDefault();
+      console.log("clicked");
+      pincode.setAttribute("style", "display: none");
+      signUpForm.setAttribute("style", "display: block");
+    });
+  }
 });

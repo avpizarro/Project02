@@ -5,24 +5,26 @@
     <div class="container containerWaiter containerManager">
         <div class="row waiterRow managerRow">
             <div class="col-12 managerContentColumn">
-
                 <table class="table empTable empForm">
                     <thead class="thead-dark">
                         <tr>
-                           <th>id</th>
-                            <th>Dish Name</th>
-                            <th>Dish Price</th>
+                            <th>id</th>
+                            <th>Ingredient Name</th>
+                            <th>Quantity</th>
+                            <th>Minimum Quantity</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each dishes}}
+                        {{#each ing}}
                         <tr>
-                           <td>{{id}}</td>
-                            <td>{{title}}</td>
-                            <td>{{price}}</td>
-                            <td class="deleteBtn"><button class="btn btn-danger btn-sm deleteDish submitBtn" type="submit" title="Delete"
-                                    data-id={{id}}><i class="fa fa-trash"></i></button></td>
+                            <td>{{id}}</td>
+                            <td>{{name}}</td>
+                            <td>{{quantity}}</td>
+                            <td>{{minimumQuantity}}</td>
+                            <td class="deleteBtn"><button class="btn btn-danger btn-sm  deleteIngredient submitBtn"
+                                    type="submit" title="Delete" data-id={{id}}><i class="fa fa-trash"></i></button>
+                            </td>
                         </tr>
                         {{/each}}
                     </tbody>

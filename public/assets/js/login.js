@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pin2 = document.getElementById("mid1");
   const pin3 = document.getElementById("mid2");
   const pin4 = document.getElementById("last");
+  const newManagerBtn = document.querySelector(".newManagerBtn");
 
   // Function to validate the pin number
   submitPin.addEventListener("click", e => {
@@ -69,4 +70,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
   };
+
+  // Click to add new manager
+  if (newManagerBtn) {
+    newManagerBtn.addEventListener("click", e => {
+      e.preventDefault();
+      const newEmployee = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        pinNumber: document.getElementById("pinNumber").value,
+        position: "manager",
+        managerId: 0
+      };
+      console.log("this is " + newEmployee);
+      fetch("/api/employees", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newEmployee)
+      })
+        .then(() => {
+          alert("Added manager successfully");
+          window.location.replace("/");
+        })
+        .catch(err => console.error(err));
+    });
+  }
 });

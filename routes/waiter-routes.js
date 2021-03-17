@@ -5,26 +5,42 @@ module.exports = app => {
   app.get("/waiter", async (req, res) => {
     try {
       const dishes = await db.Dish.findAll();
-      const tables = await db.RestaurantTable.findAll({
-        include: [{ model: db.Dish, as: "dishes" }]
-      });
-      console.log(tables);
+      const tableOrders = await db.TableDish.findAll();
+      const tables = await db.RestaurantTable.findAll();
       const parsedTables = tables.map(table => {
         const [width, height] = table.dataValues.dimension.split("x");
         const id = table.dataValues.id;
         const isAvailable = table.dataValues.isAvailable;
-        const tableDish = table.dataValues.dishes;
         return {
           dimension: {
             width,
             height
           },
           id,
-          isAvailable,
-          tableDish
+          isAvailable
         };
       });
-      res.render("waiter", { dishes, tables: parsedTables });
+      const returnedTarget = tableOrders.map(item => {
+        dishes.map(info => {
+          if (info.id === item.dishId) {
+            console.log(info.title);
+            item.title = info.title;
+          }
+          return info.title;
+        });
+        return {
+          title: item.title,
+          dishId: item.dishId,
+          tableId: item.tableId,
+          isReady: item.isReady
+        };
+      });
+
+      res.render("waiter", {
+        dishes,
+        tables: parsedTables,
+        tableOrders: returnedTarget
+      });
     } catch (err) {
       console.error(err);
     }
@@ -34,7 +50,6 @@ module.exports = app => {
   app.get("/api/dishes", (req, res) => {
     db.Dish.findAll()
       .then(response => {
-        console.log(response);
         return res.json(response);
       })
       .catch(err => {
@@ -45,13 +60,12 @@ module.exports = app => {
 
   // Route to get the dishes that belong to a specific table
   app.get("/waiter/table/Order/:id", (req, res) => {
-    db.RestaurantTable.findAll({
-      where: {
-        id: req.params.id
-      },
-      include: [{ model: db.Dish, as: "dishes" }]
+    db.TableDish.findAll({
+      where: { tableId: req.params.id }
     })
-      .then(response => res.json(response))
+      .then(response => {
+        return res.json(response);
+      })
       .catch(err => {
         console.error(err);
       });
@@ -93,7 +107,6 @@ module.exports = app => {
   app.get("/api/tables", (req, res) => {
     db.RestaurantTable.findAll()
       .then(response => {
-        console.log(response);
         return res.json(response);
       })
       .catch(err => {
@@ -104,35 +117,39 @@ module.exports = app => {
 
   // Route to update the table availability to false
   app.put("/api/table/not-available/:id", (req, res) => {
-    db.RestaurantTable.update(
-      { isAvailable: false },
-      {
-        where: { id: req.params.id }
-      }
-    )
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch(err => {
-        console.log(err);
-        return res.json(err);
-      });
+    if (typeof parseInt(req.params.id) === "number") {
+      db.RestaurantTable.update(
+        { isAvailable: false },
+        {
+          where: { id: req.params.id }
+        }
+      )
+        .then(() => {
+          res.sendStatus(200);
+        })
+        .catch(err => {
+          console.log(err);
+          return res.json(err);
+        });
+    }
   });
 
   // Route to update the table availability to true
   app.put("/api/table/available/:id", (req, res) => {
-    db.RestaurantTable.update(
-      { isAvailable: true },
-      {
-        where: { id: req.params.id }
-      }
-    )
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch(err => {
-        console.log(err);
-        return res.json(err);
-      });
+    if (typeof parseInt(req.params.id) === "number") {
+      db.RestaurantTable.update(
+        { isAvailable: true },
+        {
+          where: { id: req.params.id }
+        }
+      )
+        .then(() => {
+          res.sendStatus(200);
+        })
+        .catch(err => {
+          console.log(err);
+          return res.json(err);
+        });
+    }
   });
 };

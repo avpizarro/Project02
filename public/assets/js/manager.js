@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(newEmployee)
       })
         .then(() => {
-          alert("Added employee successly");
+          alert("Added employee successfully");
           window.location.replace("/manager");
         })
         .catch(err => console.error(err));
@@ -84,11 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const newDish = {
         title: $("#title")
           .val()
-          .trim(),
+          .trim()
+          .toUpperCase(),
         price: $("#price")
-          .val()
-          .trim(),
-        isReady: $("#isReady")
           .val()
           .trim()
       };
@@ -101,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
         .then(() => {
           alert("Added dish successfully");
-          window.location.replace("/manager/viewDish");
+          window.location.replace("/viewDish");
         })
         .catch(err => console.error(err));
     });
@@ -125,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }).then(() => {
           alert("The dish has been removed successfully!!");
-          window.location.replace("/manager/viewDish");
+          window.location.replace("/viewDish");
         });
       });
     });
@@ -141,7 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const newIngredient = {
         name: $("#name")
           .val()
-          .trim(),
+          .trim()
+          .toUpperCase(),
         quantity: $("#quantity")
           .val()
           .trim(),
@@ -158,9 +157,33 @@ document.addEventListener("DOMContentLoaded", () => {
       })
         .then(() => {
           alert("Added ingredient successfully");
-          window.location.replace("/manager/viewIngredient");
+          window.location.replace("/viewIngredient");
         })
         .catch(err => console.error(err));
+    });
+  }
+
+  // delete Dish
+  const deleteIngredient = document.querySelectorAll(".deleteIngredient");
+  console.log(deleteIngredient);
+  if (deleteIngredient) {
+    deleteIngredient.forEach(ingredient => {
+      ingredient.addEventListener("click", e => {
+        e.preventDefault();
+        console.log("clicked");
+        const id = ingredient.getAttribute("data-id");
+        console.log(id);
+
+        fetch(`/api/ingredient/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(() => {
+          alert("The ingredient has been removed successfully!!");
+          window.location.replace("/viewIngredient");
+        });
+      });
     });
   }
 });

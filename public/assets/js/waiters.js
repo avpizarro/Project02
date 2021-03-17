@@ -8,13 +8,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const orderBody = document.querySelectorAll(".orderBody");
   const menuDish = document.querySelectorAll(".menuDish");
   const orderedDish = document.querySelectorAll(".orderedDish");
-  const tables = document.querySelectorAll(".restaurantTable");
+  const availableBtn = document.querySelectorAll(".availableBtn");
+  const signUpBtn = document.getElementById("signUpBtn");
+  const restaurantTable = document.querySelectorAll(".restaurantTable");
+
+  restaurantTable.forEach(table => {
+    if (table.className === "table restaurantTable availablefalse") {
+      table.firstElementChild.setAttribute(
+        "style",
+        "box-shadow: 2px 2px 2px darkorange"
+      );
+      table.lastElementChild.setAttribute(
+        "style",
+        "box-shadow: 2px 2px 2px darkorange"
+      );
+      table.lastElementChild.textContent = "reserved";
+    }
+  });
+
+  signUpBtn.setAttribute("style", "display: none");
 
   let tableId = "";
   let dishBelongsTo = "";
   let toShow = "";
 
-  //Click to hide the dish once it is served -- needs update route
+  //Click to hide the dish once it is served
   orderedDish.forEach(dish => {
     dish.addEventListener("click", e => {
       e.preventDefault();
@@ -52,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //Click to show the availability of the table
-  tables.forEach(table => {
+  availableBtn.forEach(table => {
     table.addEventListener("click", e => {
       e.preventDefault();
       console.log("clicked");
@@ -64,10 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
         isAvailable: false,
         updatedAt: "9999-12-31 23:59:59"
       };
-      if (e.target.className === "table restaurantTable availabletrue") {
+      if (
+        e.target.parentElement.className ===
+        "table restaurantTable availabletrue"
+      ) {
         tableTaken(tableToUpdateId, dataToUpdate);
+        window.location.replace("/waiter");
       } else {
         tableFree(tableToUpdateId, dataToUpdate);
+        window.location.replace("/waiter");
       }
     });
   });

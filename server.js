@@ -1,4 +1,7 @@
 const express = require("express");
+require("dotenv").config();
+
+// console.log(process.env);
 
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
@@ -16,14 +19,14 @@ app.use(express.json());
 const Handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 const {
-  allowInsecurePrototypeAccess
+  allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
 
 app.engine(
   "handlebars",
   exphbs({
     defaultLayout: "main",
-    handlebars: allowInsecurePrototypeAccess(Handlebars)
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
   })
 );
 app.set("view engine", "handlebars");
@@ -35,6 +38,8 @@ const managerRoutes = require("./routes/manager-routes");
 const waiterRoutes = require("./routes/waiter-routes");
 const loginRoutes = require("./routes/login-routes");
 const chefRoutes = require("./routes/chef-routes");
+const apiRoutes = require("./routes/api-routes");
+const nounRoutes = require("./routes/nounProject-routes");
 
 ingredientRoutes(app);
 managerRoutes(app);
@@ -42,9 +47,11 @@ routes(app);
 waiterRoutes(app);
 loginRoutes(app);
 chefRoutes(app);
+apiRoutes(app);
+nounRoutes(app);
 
 // Start our server so that it can begin listening to client requests.
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {
     // Log (server-side) when our server has started
     console.log("Server listening on: http://localhost:" + PORT);
