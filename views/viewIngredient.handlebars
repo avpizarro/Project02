@@ -10,6 +10,7 @@
                         <tr>
                             <th>id</th>
                             <th>Ingredient Name</th>
+                            <th>Icon</th>
                             <th>Quantity</th>
                             <th>Minimum Quantity</th>
                         </tr>
@@ -19,6 +20,7 @@
                         <tr>
                             <td>{{id}}</td>
                             <td>{{name}}</td>
+                            <td> {{#if url}}<img src="{{url}}" style="margin-bottom: 10px;">{{/if}} </td>
                             <td>{{quantity}}</td>
                             <td>{{minimumQuantity}}</td>
                         </tr>

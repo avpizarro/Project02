@@ -4,29 +4,36 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
-        len: [1]
-      }
+        len: [1],
+      },
+    },
+    url: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      validate: {
+        len: [1],
+      },
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        len: [1]
-      }
+        len: [1],
+      },
     },
     minimumQuantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        len: [1]
-      }
-    }
+        len: [1],
+      },
+    },
   });
   //Ingredient table with Dish Table connect "many to many"
   Ingredient.associate = function(models) {
@@ -34,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       through: "IngredientDishes",
       as: "dishes",
       foreignKey: "ingredientId",
-      otherKey: "dishId"
+      otherKey: "dishId",
     });
   };
   //Ingredient table with Supplier Table connect "many to many"
@@ -43,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       through: "IngredientSuppliers",
       as: "suppliers",
       foreignKey: "ingredientId",
-      otherKey: "supplierId"
+      otherKey: "supplierId",
     });
   };
   return Ingredient;

@@ -2,12 +2,12 @@ const db = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
-module.exports = app => {
+module.exports = (app) => {
   app.get("/chef", async (req, res) => {
     try {
       const dishIdArray = [];
       const orderedDishes = await db.TableDish.findAll({});
-      const parsedOrderedDishes = orderedDishes.map(dish => {
+      const parsedOrderedDishes = orderedDishes.map((dish) => {
         const dishId = dish.dishId;
         dishIdArray.push(dishId);
         const tableId = dish.tableId;
@@ -15,27 +15,21 @@ module.exports = app => {
         return {
           dishId,
           tableId,
-          isReady
+          isReady,
         };
       });
       console.log(`Dishes orderd: ${dishIdArray}`);
       const orderTitles = await db.Dish.findAll({
-        where: { id: { [Op.in]: dishIdArray } }
+        where: { id: { [Op.in]: dishIdArray } },
       });
 
-      const returnedTarget = parsedOrderedDishes.map(item => {
-        orderTitles.map(info => {
-          if (info.id === item.dishId) {
-            console.log(info.title);
-            item.title = info.title;
-          }
-          return info.title;
-        });
+      const returnedTarget = parsedOrderedDishes.map((item) => {
+        const { title } = orderTitles.find(({ id }) => id === item.dishId);
         return {
-          title: item.title,
+          title,
           dishId: item.dishId,
           tableId: item.tableId,
-          isReady: item.isReady
+          isReady: item.isReady,
         };
       });
 
@@ -54,13 +48,13 @@ module.exports = app => {
 
     if (dishId === undefined || tableId === undefined) {
       return res.status(400).json({
-        err: "No dish or table selected"
+        err: "No dish or table selected",
       });
     }
     await db.TableDish.update(
       { isReady: true },
       { where: { tableId, dishId } }
-    ).then(rowsUpdated => {
+    ).then((rowsUpdated) => {
       res.json(rowsUpdated);
     });
   });

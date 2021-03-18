@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   icon.addEventListener("click", (e) => {
     e.preventDefault();
     console.log("clicked");
-    getIcon();
+    getIcon("tomatoe");
   });
 
-  const getIcon = () => {
-    fetch("/api/icons")
+  const getIcon = (ingName) => {
+    fetch(`/api/icons/${ingName}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

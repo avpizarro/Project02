@@ -1,18 +1,22 @@
 const NounProject = require("the-noun-project");
 
-module.exports = app => {
-  app.get("/api/icons", (req, res) => {
+module.exports = (app) => {
+  app.get("/api/icons/:ing", (req, res) => {
     const nounProject = new NounProject({
       key: process.env.API_KEY,
-      secret: process.env.API_SECRET
+      secret: process.env.API_SECRET,
     });
-    nounProject.getIconsByTerm("chicken", { limit: 5 }, async (err, data) => {
-      const icons = await data.icons;
-      console.log(icons);
+    nounProject.getIconsByTerm(
+      req.params.ing,
+      { limit: 5 },
+      async (err, data) => {
+        const icons = await data.icons;
+        console.log(icons);
 
-      const previewUrls = icons.map(icon => icon.preview_url_42);
+        const previewUrls = icons.map((icon) => icon.preview_url_42);
 
-      res.json(previewUrls);
-    });
+        res.json(previewUrls);
+      }
+    );
   });
 };

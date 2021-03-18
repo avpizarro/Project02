@@ -127,7 +127,7 @@ footer {
 }
 
 .submitBtn {
-  background-color: #eee; 
+  background-color: #eee;
   color: #000;
   font-family: "Roboto", sans-serif;
   border-style: none;
@@ -135,7 +135,7 @@ footer {
   font-weight: bold;
   font-size: 14px;
   border-radius: 4px;
-  box-shadow: 2px 2px 2px rgb(123, 123, 123)
+  box-shadow: 2px 2px 2px rgb(123, 123, 123);
 }
 
 .submitBtn:hover {
@@ -223,9 +223,9 @@ h1 {
 }
 
 .availableBtn {
-font-size: xx-small;
-font-weight: 100;
-margin-left: 20px;
+  font-size: xx-small;
+  font-weight: 100;
+  margin-left: 20px;
 }
 
 .orderTitle {
@@ -249,7 +249,7 @@ margin-left: 20px;
 /* Ingredients page CSS */
 
 .orderButton {
-  background-color: rgb(206, 203, 203);;
+  background-color: rgb(206, 203, 203);
   float: right;
   margin-top: 0px;
   margin-left: 20px;
@@ -404,7 +404,7 @@ tbody {
   font-size: large;
 }
 
- th {
+th {
   padding: 20px !important;
 }
 
@@ -456,6 +456,17 @@ td {
   margin-bottom: 50px;
 }
 
+.iconToChoose {
+  margin: 5px;
+  margin-left: 10px;
+}
+
+.pickIcon input[type=radio]:checked {
+background-color: orange;
+border-color: orange;
+color: orange;
+}
+
 /* Media queries */
 
 @media (min-width: 1400px) {
@@ -465,11 +476,11 @@ td {
   }
 }
 
-  @media (max-width: 1400px) {
-  .dishTitle{
+@media (max-width: 1400px) {
+  .dishTitle {
     padding: 30px;
   }
-  .orderButton{
+  .orderButton {
     margin-top: 10px;
   }
 }
@@ -500,7 +511,6 @@ td {
     margin-left: 0;
   }
 }
-
 
 @media (max-width: 424px) {
   .pinBox {
