@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const signUpBtn = document.getElementById("signUpBtn");
   const restaurantTable = document.querySelectorAll(".restaurantTable");
 
-  restaurantTable.forEach(table => {
+  restaurantTable.forEach((table) => {
     if (table.className === "table restaurantTable availablefalse") {
       table.firstElementChild.setAttribute(
         "style",
@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let toShow = "";
 
   //Click to hide the dish once it is served
-  orderedDish.forEach(dish => {
-    dish.addEventListener("click", e => {
+  orderedDish.forEach((dish) => {
+    dish.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("clicked");
       const orderedDishId = parseInt(e.target.getAttribute("data-id"));
@@ -44,13 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Click to display the order
-  tableBtn.forEach(button => {
-    button.addEventListener("click", e => {
+  tableBtn.forEach((button) => {
+    button.addEventListener("click", (e) => {
       e.preventDefault();
-      orderTitle.forEach(title => {
+      orderTitle.forEach((title) => {
         title.setAttribute("style", "display: none");
       });
-      orderBody.forEach(item => {
+      orderBody.forEach((item) => {
         item.setAttribute("style", "display: none");
       });
       console.log("clicked");
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dishBelongsTo = parseInt(orderedDish[i].getAttribute("data-tableId"));
         if (tableId === dishBelongsTo) {
           toShow = document.querySelectorAll(`.order${tableId}`);
-          toShow.forEach(data => {
+          toShow.forEach((data) => {
             data.setAttribute("style", "display: block");
           });
         }
@@ -70,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //Click to show the availability of the table
-  availableBtn.forEach(table => {
-    table.addEventListener("click", e => {
+  availableBtn.forEach((table) => {
+    table.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("clicked");
       const tableToUpdateId = parseInt(e.target.getAttribute("data-id"));
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dataToUpdate = {
         id: tableToUpdateId,
         isAvailable: false,
-        updatedAt: "9999-12-31 23:59:59"
+        updatedAt: "9999-12-31 23:59:59",
       };
       if (
         e.target.parentElement.className ===
@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Make the dishes clickable to order a dish
-  menuDish.forEach(button => {
-    button.addEventListener("click", e => {
+  menuDish.forEach((button) => {
+    button.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("clicked");
       const dishId = parseInt(e.target.getAttribute("data-id"));
@@ -109,18 +109,20 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(orderList);
       newDish.textContent = e.target.textContent.replace(/[0-9]/g, "");
       console.log(newDish.textContent);
-      orderList.prepend(newDish);
+      if (orderList) {
+        orderList.prepend(newDish);
+      }
     });
   });
 
   //Function to get the dishes ordered by a table
-  const getDishes = item => {
+  const getDishes = (item) => {
     fetch(`/waiter/table/Order/${item}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(response => response.json());
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
   };
 
   //Function to order Dishes
@@ -128,9 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`api/table/${table}/add-dish/${dish}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(response => response.json());
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
   };
 
   // Function to remove a dish
@@ -138,11 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`api/table/${table}/remove-dish/${dish}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
       });
   };
@@ -152,10 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`/api/table/not-available/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(availability)
-    }).then(response => {
+      body: JSON.stringify(availability),
+    }).then((response) => {
       if (response.ok) {
         console.log(`table ${id} is taken`);
         // window.location.replace("/waiter");
@@ -170,10 +172,10 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`/api/table/available/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(availability)
-    }).then(response => {
+      body: JSON.stringify(availability),
+    }).then((response) => {
       if (response.ok) {
         console.log(`table ${id} is available`);
         // window.location.replace("/waiter");
