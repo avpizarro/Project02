@@ -461,10 +461,10 @@ td {
   margin-left: 10px;
 }
 
-.pickIcon input[type=radio]:checked {
-background-color: orange;
-border-color: orange;
-color: orange;
+.pickIcon input[type="radio"]:checked {
+  background-color: orange;
+  border-color: orange;
+  color: orange;
 }
 
 /* Media queries */

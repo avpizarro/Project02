@@ -30,7 +30,7 @@
                             {{/each}}
                             {{#each tableOrders}}
                             {{#if tableId }}
-                            <ul class="waiterList order{{tableId}} orderBody" style="display: none;">
+                            <ul class="waiterList order{{tableId}} orderBody orderBody{{tableId}}" style="display: none;">
                                 <li class="list-group-item orderedDish ready{{isReady}} line" data-id="{{dishId}}"
                                     data-tableId="{{tableId}}" data-status="{{isReady}}">
                                     {{title}}</li>
@@ -44,7 +44,7 @@
             </div>
 
             {{!-- Display the Menu --}}
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div class="menu">
                     <h1>Menu</h1>
                     <div>

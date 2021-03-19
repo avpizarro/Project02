@@ -23,7 +23,6 @@ module.exports = app => {
       const returnedTarget = tableOrders.map(item => {
         dishes.map(info => {
           if (info.id === item.dishId) {
-            console.log(info.title);
             item.title = info.title;
           }
           return info.title;

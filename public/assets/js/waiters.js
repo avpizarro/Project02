@@ -103,6 +103,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const dishId = parseInt(e.target.getAttribute("data-id"));
       console.log(dishId);
       orderDishes(tableId, dishId);
+      const newDish = document.createElement("li");
+      newDish.classList.add("line", "list-group-item");
+      const orderList = document.querySelector(`.orderBody${tableId}`);
+      console.log(orderList);
+      newDish.textContent = e.target.textContent.replace(/[0-9]/g, "");
+      console.log(newDish.textContent);
+      orderList.prepend(newDish);
     });
   });
 
