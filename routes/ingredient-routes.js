@@ -1,49 +1,6 @@
 const db = require("../models");
 const sequelize = require("sequelize");
 
-// let inStock;
-// let lowStock;
-
-// module.exports = app => {
-//   const find = () => {
-//     // get the ingredients where are greater from the minimun quantity
-//     db.Ingredient.findAll({
-//       where: {
-//         quantity: { [sequelize.Op.gt]: sequelize.col("minimumQuantity") }
-//       }
-//     }).then(data => {
-//       inStock = data;
-//     });
-
-//     // get the ingredients where are less or equal from the minimun quantity
-//     db.Ingredient.findAll({
-//       where: {
-//         quantity: { [sequelize.Op.lte]: sequelize.col("minimumQuantity") }
-//       }
-//     }).then(data => {
-//       lowStock = data;
-//     });
-//   };
-
-//   // find();
-
-//   app.get("/ingredients", (req, res) => {
-//     res.render("ingredients", { inStock, lowStock });
-//   });
-
-//   app.put("/api/ingredients/:id", (req, res) => {
-//     db.Ingredient.update(
-//       { quantity: sequelize.literal("quantity + minimumQuantity*2") },
-//       {
-//         where: { id: req.params.id }
-//       }
-//     ).then(() => {
-//       find();
-//       res.sendStatus(200);
-//     });
-//   });
-// };
-
 module.exports = app => {
   app.get("/ingredients", async (req, res) => {
     try {
@@ -70,6 +27,19 @@ module.exports = app => {
       { quantity: sequelize.literal("quantity + minimumQuantity*2") },
       {
         where: { id: req.params.id }
+      }
+    )
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch(err => console.log(err));
+  });
+
+  app.put("/api/ingredients/add/Icon", (req, res) => {
+    db.Ingredient.update(
+      { url: req.body.url },
+      {
+        where: { name: req.body.name }
       }
     )
       .then(() => {

@@ -5,13 +5,12 @@
     <div class="container containerWaiter containerManager">
         <div class="row waiterRow managerRow">
             <div class="col-12 managerContentColumn">
-                <table class="table empTable">
+                <table class="table empTable empForm">
                     <thead class="thead-dark">
                         <tr>
                             <th>id</th>
                             <th>Dish Name</th>
                             <th>Dish Price</th>
-                            <th>isReady</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -19,8 +18,7 @@
                         <tr>
                             <td>{{id}}</td>
                             <td>{{title}}</td>
-                            <td>{{price}}</td>
-                            <td>{{isReady}}</td>
+                            <td>$ {{price}}</td>
                         </tr>
                         {{/each}}
                     </tbody>

@@ -13,6 +13,7 @@
                             <th>Icon</th>
                             <th>Quantity</th>
                             <th>Minimum Quantity</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,6 +24,9 @@
                             <td> {{#if url}}<img src="{{url}}" style="margin-bottom: 10px;">{{/if}} </td>
                             <td>{{quantity}}</td>
                             <td>{{minimumQuantity}}</td>
+                            <td class="deleteBtn"><button class="btn btn-danger btn-sm  deleteIngredient submitBtn"
+                                    type="submit" title="Delete" data-id={{id}}><i class="fa fa-trash"></i></button>
+                            </td>
                         </tr>
                         {{/each}}
                     </tbody>

@@ -8,7 +8,6 @@ module.exports = app => {
       }
     })
       .then(response => {
-        console.log(response);
         return res.json(response);
       })
       .catch(err => {
