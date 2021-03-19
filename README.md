@@ -5,9 +5,9 @@
 
   A simple restaurant management app.
 
-  Github repository :link: https://github.com/wendyVo/Project02.git
+  Github repository :link: https://github.com/avpizarro/Project02.git
 
-  Heroku webpage :link: https://frozen-woodland-65100.herokuapp.com/
+  Heroku webpage :link: https://polar-reaches-51270.herokuapp.com/
 
   ![login](public/assets/img/readmeImg/login.png)
 
